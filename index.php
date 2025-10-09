@@ -1033,7 +1033,7 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		//let city = document.getElementById( 'contactform-city' ).value;
 		$.ajax({
 			type: "POST",
-			url: 'https://himmelrf.ru/ajaxCallback.php',
+			url: 'include_form.php',
 			data: { tel: tel },
 			success: function( data ) {
 				document.getElementById( 'callbackContent' ).innerHTML = data;
