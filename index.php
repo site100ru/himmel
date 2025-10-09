@@ -752,7 +752,7 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		let city = document.getElementById( 'contactform-city-3' ).value;
 		$.ajax({
 			type: "POST",
-			url: 'include_forms.php,
+			url: 'include_ajaxDownload_form.php,
 			data: { name: name, email: email, tel: tel, city: city },
 			success: function( data ) {
 				document.getElementById( 'downloadContent' ).innerHTML = data;
@@ -908,7 +908,7 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		let city = document.getElementById( 'contactform-city' ).value;
 		$.ajax({
 			type: "POST",
-			url: 'include_forms.php',
+			url: 'include_ajaxFeedback_form.php',
 			data: { name: name, email: email, tel: tel, city: city },
 			success: function( data ) {
 				document.getElementById( 'feedbackContentId' ).innerHTML = data;
@@ -1033,7 +1033,7 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		//let city = document.getElementById( 'contactform-city' ).value;
 		$.ajax({
 			type: "POST",
-			url: 'include_forms.php',
+			url: 'include_ajaxCallback_form.php',
 			data: { tel: tel },
 			success: function( data ) {
 				document.getElementById( 'callbackContent' ).innerHTML = data;
