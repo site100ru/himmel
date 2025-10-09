@@ -752,7 +752,7 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		let city = document.getElementById( 'contactform-city-3' ).value;
 		$.ajax({
 			type: "POST",
-			url: 'include_ajaxDownload_form.php,
+			url: 'include_ajaxDownload_form.php',
 			data: { name: name, email: email, tel: tel, city: city },
 			success: function( data ) {
 				document.getElementById( 'downloadContent' ).innerHTML = data;
