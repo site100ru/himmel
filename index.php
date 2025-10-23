@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 
 MaskedInputAsset::register($this);
-
 $this->title = 'Himmel — дизайнерские потолочные, стеновые и фасадные конструкции в Москве, Санкт-Петербурге и по всей России. Производство дизайнерских потолочных, стеновых и фасадных конструкций.';
 ?>
 <style>
@@ -32,6 +31,10 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 	.s7 .content__sm-reika:after {
 		background-image: none; /* url(/i/reyka-himmel-aero.png); */
 	}
+
+    .text-success {
+        color: #fff !important;
+    }
 
 	/*
 	input[name="ContactForm[name]"] {
@@ -550,7 +553,13 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 	
     <nav class="navleft">
         <ul class="navleft_icons">
-            <li><a href="<?= Url::to(['page/feedback']); ?>" class="_section__btn-page" data-ajax_method="GET" data-backdrop tabindex="-1"><div class="navleft__icon text-wood"><svg><use xlink:href="#ico__envelope"></use></svg></div></a></li>
+            <li>
+                <a href="#" onclick="showModal();" class="" tabindex="-1">
+                    <div class="navleft__icon text-wood">
+                        <svg><use xlink:href="#ico__envelope"></use></svg>
+                    </div>
+                </a>
+            </li>
             <!--li><a href="https://business.facebook.com/himmelrf/?business_id=360347817759602" target="_blank"><div class="navleft__icon"><svg><use xlink:href="#ico__vk"></use></svg></div></a></li>
             <li><a href="https://www.instagram.com/himmelrf/" target="_blank"><div class="navleft__icon"><svg><use xlink:href="#ico__instagram"></use></svg></div></a></li-->
         </ul>
@@ -645,41 +654,52 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 			<div id="downloadContent" class="feedback__content align-self-center flex-fill d-flex flex-column justify-content-center">
 				<h3 class="mb-5 text-uppercase"><span class="text-wood">Скачать</span> каталог</h3>
 				<!--<form id="grid__form-create" class="_getcat" action="" method="post" onsubmit="ajaxDownload(); download(); return false;"> -->
-				<form id="grid__form-create" class="_getcat track-goal-form" action="" method="post" onsubmit="ajaxDownload(); download(); return false;">
+
+                <form id="grid__form-create-download" class="_getcat track-goal-form" action="" method="post" onsubmit="ajaxDownload(); return false;">
+                    <input type="text" name="name" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="new-password">
+                    <input type="hidden" name="form_timestamp" id="form-timestamp-download">
 
 					<div class="model-fields mb-4">
 						<div class="form-group label-floating field-contactform-name required is_empty">
-							<label class="control-label" for="contactform-name-3">Как вас зовут?</label>
-							<input type="text" id="contactform-name-3" class="form-control" name="ContactForm[name2]" tabindex="1" required="" aria-required="true">
-							<div class="help-block"></div>
-						</div>
+                            <label class="control-label" for="contactform-name-3">Как вас зовут?</label>
+                            <input type="text" id="contactform-name-3" class="form-control" name="user_name" tabindex="1" required>
+                            <div class="help-block"></div>
+                        </div>
 						<div class="form-group label-floating is_empty field-contactform-email required">
 							<label class="control-label" for="contactform-email-3">E-mail</label>
-							<input type="text" id="contactform-email-3" class="form-control" name="ContactForm[email]" tabindex="2" required="" aria-required="true">
+							<input type="text" id="contactform-email-3" class="form-control" name="email" tabindex="2" required="" aria-required="true">
 
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group label-floating is_empty field-contactform-phone required">
 							<label class="control-label" for="contactform-phone-3">Номер телефона</label>
 							<div class="input-group">
-							<input type="text" id="contactform-phone-3" class="form-control _phonemask" name="ContactForm[phone]" tabindex="3" required="" data-mask="\+\7 (999) 999-99-99" aria-required="true"><div class="input-group-prepend"><button class="btn btn-flag pr-0 dropdown-toggle" type="button" data-toggle="dropdown"><span id="flag" class="flag-icon flag-icon-ru"></span></button><div id="w0" class="_cc dropdown-menu-right dropdown-menu"><a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a>
-							<a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a>
-							<a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a>
-							<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a>
-							<a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a>
-							<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a>
-							<a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a>
-							<a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a>
-							<a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a>
-							<a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a></div></div></div>
+							<input type="text" id="contactform-phone-3" class="form-control _phonemask" name="tel" tabindex="3" required="" data-mask="\+\7 (999) 999-99-99" aria-required="true">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-flag pr-0" type="button">
+                                    <span id="flag" class="flag-icon flag-icon-ru"></span>
+                                </button>
+                                <!-- <div id="w0" class="_cc dropdown-menu-right dropdown-menu"> -->
+                            <!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a> -->
+							<!-- <a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a> -->
+							<!-- <div class="dropdown-divider"></div> -->
+							<!-- <a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a> -->
+                        <!-- </div> -->
+                    </div></div>
 
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group label-floating is_empty field-contactform-city">
 							<label class="control-label" for="contactform-city-3">Город</label>
-							<input type="text" id="contactform-city-3" class="form-control" name="ContactForm[city]" tabindex="4">
+							<input type="text" id="contactform-city-3" class="form-control" name="city" tabindex="4">
 
 							<div class="help-block"></div>
 						</div>
@@ -698,87 +718,150 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 <div id="modalDownloadBackdrop" class="modal-backdrop" style="position: static;"></div>
 
 <script>
-	function showModalDownload() {
-		// Show modal download window
-		document.getElementById( 'modalDownload' ).style.display = 'block';
-		document.getElementById( 'modalDownload' ).classList.add( 'show' );
-		document.getElementById( 'modalDownloadBackdrop' ).style.position = 'fixed';
-		document.getElementById( 'modalDownloadBackdrop' ).classList.add( 'show' );
-		
-		var offset = 0 - (new Date().getTimezoneOffset()/60) - 7;
-		$('input[name="ContactForm[tz]"]').first().val((offset <= 0 ?'':'+') + offset);
+function showModalDownload() {
+    // Show modal download window
+    document.getElementById('modalDownload').style.display = 'block';
+    document.getElementById('modalDownload').classList.add('show');
+    document.getElementById('modalDownloadBackdrop').style.position = 'fixed';
+    document.getElementById('modalDownloadBackdrop').classList.add('show');
+    
+    // Записываем timestamp
+    document.getElementById('form-timestamp-download').value = Date.now();
+    
+    var offset = 0 - (new Date().getTimezoneOffset()/60) - 7;
+    $('input[name="tz"]').first().val((offset <= 0 ?'':'+') + offset);
 
-		$('._phonemask').each(function() {
-			$(this).inputmask({
-				mask: $(this).data('mask'),
-				removeMaskOnSubmit: false,
-				showMaskOnHover: false,
-				showMaskOnFocus: true,
-				//clearMaskOnLostFocus: false,
-				onKeyValidation: function(key, result) {
-					if ($(this).inputmask('isComplete')) {
-						this.setCustomValidity('');
-					} else {
-						this.setCustomValidity("Укажите телефон");
-					}
-				}
-			});
-		});
-		$('._cc > .dropdown-item').on('click', function(e) {
-			var $mask = $('._phonemask');
-			$mask.inputmask('setvalue', null);
-			$mask.inputmask('option', {mask: $(this).data('mask')});
-			$mask.focus();
-			$('input[name="ContactForm[cc]"]').first().val($(this).data('cc'));
-			$('#flag').attr('title', $(this).text()).removeClass(function (index, className) { return (className.match (/(^|\s)flag-icon-\S{2}/g) || []).join(' '); }).addClass('flag-icon-'+$(this).data('cc'));
-		});
+    $('._phonemask').each(function() {
+        $(this).inputmask({
+            mask: $(this).data('mask'),
+            removeMaskOnSubmit: false,
+            showMaskOnHover: false,
+            showMaskOnFocus: true,
+            onKeyValidation: function(key, result) {
+                if ($(this).inputmask('isComplete')) {
+                    this.setCustomValidity('');
+                } else {
+                    this.setCustomValidity("Укажите телефон");
+                }
+            }
+        });
+    });
+    
+    $('._cc > .dropdown-item').on('click', function(e) {
+        var $mask = $('._phonemask');
+        $mask.inputmask('setvalue', null);
+        $mask.inputmask('option', {mask: $(this).data('mask')});
+        $mask.focus();
+        $('input[name="cc"]').first().val($(this).data('cc'));
+        $('#flag').attr('title', $(this).text()).removeClass(function (index, className) { 
+            return (className.match (/(^|\s)flag-icon-\S{2}/g) || []).join(' '); 
+        }).addClass('flag-icon-'+$(this).data('cc'));
+    });
 
-		$('.label-floating input').on('focusin', function(e) {
-			$(this).closest('.label-floating').removeClass('is_empty');
-		});
-		$('.label-floating input').on('focusout', function(e) {
-			if (!$(this).val().length) {
-				$(this).closest('.label-floating').addClass('is_empty');
-			}
-		});
-	}
-	
-	// Отправляем данные
-	function ajaxDownload() {
-		//let recaptcha = document.getElementById( 'g-recaptcha-response-download' ).value;
-		let name = document.getElementById( 'contactform-name-3' ).value;
-		let email = document.getElementById( 'contactform-email-3' ).value;
-		let tel = document.getElementById( 'contactform-phone-3' ).value;
-		let city = document.getElementById( 'contactform-city-3' ).value;
-		$.ajax({
-			type: "POST",
-			url: 'include_ajaxDownload_form.php',
-			data: { name: name, email: email, tel: tel, city: city },
-			success: function( data ) {
-				document.getElementById( 'downloadContent' ).innerHTML = data;
-				sendOrder();
-			}
-		});
-	}
-	
-	// Закрываем модальное окно
-	function modalClose3() {
-		document.getElementById( 'modalDownload' ).style.display = 'none';
-		document.getElementById( 'modalDownload' ).classList.remove( 'show' );
-		document.getElementById( 'modalDownloadBackdrop' ).style.position = 'static';
-		document.getElementById( 'modalDownloadBackdrop' ).classList.remove( 'show' );
-	}
-	
-	/* Download file with send mail */
-	function download() {
-		let link = document.createElement('a');
-		link.setAttribute('href', 'https://himmelrf.ru/Himmel_catalog.pdf');
-		link.setAttribute('download', 'Himmel_catalog.pdf');
-		link.click();
-		return false;
-	}
+    $('.label-floating input').on('focusin', function(e) {
+        $(this).closest('.label-floating').removeClass('is_empty');
+    });
+    $('.label-floating input').on('focusout', function(e) {
+        if (!$(this).val().length) {
+            $(this).closest('.label-floating').addClass('is_empty');
+        }
+    });
+}
+
+// Отправляем данные
+function ajaxDownload() {
+    let user_name = document.getElementById('contactform-name-3').value;
+    let email = document.getElementById('contactform-email-3').value;
+    let tel = document.getElementById('contactform-phone-3').value;
+    let city = document.getElementById('contactform-city-3').value;
+    let honeypot = document.querySelector('#grid__form-create-download input[name="name"]').value;
+    let timestamp = document.getElementById('form-timestamp-download').value;
+    
+    let form = document.getElementById('grid__form-create-download');
+    
+    document.querySelectorAll('.field-error').forEach(el => el.remove());
+    document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+    
+    $.ajax({
+        type: "POST",
+        url: 'include_mail_download.php',
+        data: { 
+            user_name: user_name, 
+            email: email, 
+            tel: tel, 
+            city: city, 
+            name: honeypot, 
+            form_timestamp: timestamp 
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                document.getElementById('downloadContent').innerHTML = 
+                    '<h3 class="text-center text-success">Спасибо!</h3>' +
+                    '<p class="text-center">' + response.message + '</p>';
+                // download();
+                setTimeout(modalClose3, 3000);
+            } else if (response.field_errors) {
+                for (let field in response.field_errors) {
+                    let errors = response.field_errors[field].join('<br>');
+                    
+                    if (field === 'user_name') {
+                        let fieldGroup = document.getElementById('contactform-name-3').closest('.form-group');
+                        fieldGroup.classList.add('has-error');
+                        fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                    } else if (field === 'email') {
+                        let fieldGroup = document.getElementById('contactform-email-3').closest('.form-group');
+                        fieldGroup.classList.add('has-error');
+                        fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                    } else if (field === 'tel') {
+                        let fieldGroup = document.getElementById('contactform-phone-3').closest('.form-group');
+                        fieldGroup.classList.add('has-error');
+                        fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                    } else if (field === 'city') {
+                        let fieldGroup = document.getElementById('contactform-city-3').closest('.form-group');
+                        fieldGroup.classList.add('has-error');
+                        fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                    } else {
+                        form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + errors + '</div>');
+                    }
+                }
+            } else if (response.message) {
+                form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + response.message + '</div>');
+            }
+        },
+        error: function() {
+            form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">Ошибка соединения</div>');
+        },
+        complete: function() {
+            setTimeout(function() {
+                document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                document.querySelectorAll('.btn__spinner').forEach(function(s) {
+                    s.className = 'btn__icon';
+                    let use = s.querySelector('use');
+                    if (use) use.setAttribute('xlink:href', '#ico__arrow-1-w');
+                });
+            }, 2000);
+        }
+    });
+}
+
+// Закрываем модальное окно
+function modalClose3() {
+    document.getElementById('modalDownload').style.display = 'none';
+    document.getElementById('modalDownload').classList.remove('show');
+    document.getElementById('modalDownloadBackdrop').style.position = 'static';
+    document.getElementById('modalDownloadBackdrop').classList.remove('show');
+}
+
+// Download file with send mail
+function download() {
+    let link = document.createElement('a');
+    link.setAttribute('href', 'https://himmelrf.ru/Himmel_catalog.pdf');
+    link.setAttribute('download', 'Himmel_catalog.pdf');
+    link.click();
+    return false;
+}
 </script>
-
 
 <!-- ================================================================================================================= -->
 
@@ -791,46 +874,51 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 	<div class="modal__body2 d-flex flex-wrap justify-content-center" role="document">
 		<div class="modal__content modal__content-feedback align-self-center d-flex flex-wrap">
 			<div id="feedbackContentId" class="feedback__content align-self-center flex-fill d-flex flex-column justify-content-center">
-				<h3 class="mb-5 text-uppercase"><span class="text-wood">Свяжитесь</span> с нами..</h3>
-				<form id="grid__form-create" class="_getcons _getcall _callnow _getcat _advert track-goal-form" action="" method="post" onsubmit="ajaxFeedback(); return false;"><!--  ym(35277685,'reachGoal','LEAD'); return false; -->
-					<div class="model-fields mb-4">
+				<h3 class="mb-5 text-uppercase"><span class="text-wood">Свяжитесь</span> с нами</h3>
+				<form id="grid__form-create-feedback" class="_getcons _getcall _callnow _getcat _advert track-goal-form" action="" method="post" onsubmit="ajaxFeedback(); return false;"><!--  ym(35277685,'reachGoal','LEAD'); return false; -->
+                    <input type="text" name="name" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="new-password">
+                    <input type="hidden" name="form_timestamp" id="form-timestamp-feedback">
+                    
+                    <div class="model-fields mb-4">
 						<div class="form-group label-floating field-contactform-name required is_empty">
 							<label class="control-label" for="contactform-name">Как вас зовут?</label>
-							<input type="text" id="contactform-name" class="form-control" name="ContactForm[name2]" tabindex="1" required="" aria-required="true">
+							<input type="text" id="contactform-name" class="form-control" name="user_name" tabindex="1" required="" aria-required="true">
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group label-floating is_empty field-contactform-email required">
 							<label class="control-label" for="contactform-email">E-mail</label>
-							<input type="text" id="contactform-email" class="form-control" name="ContactForm[email]" tabindex="2" required="" aria-required="true">
+							<input type="text" id="contactform-email" class="form-control" name="email" tabindex="2" required="" aria-required="true">
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group label-floating is_empty field-contactform-phone required">
 							<label class="control-label" for="contactform-phone">Номер телефона</label>
 							<div class="input-group">
-								<input type="text" id="contactform-phone" class="form-control _phonemask" name="ContactForm[phone]" tabindex="3" required="" data-mask="\+\7 (999) 999-99-99" aria-required="true">
+								<input type="text" id="contactform-phone" class="form-control _phonemask" name="tel" tabindex="3" required="" data-mask="\+\7 (999) 999-99-99" aria-required="true">
 								<div class="input-group-prepend">
-									<button class="btn btn-flag pr-0 dropdown-toggle" type="button" data-toggle="dropdown"><span id="flag" class="flag-icon flag-icon-ru"></span></button>
-									<div id="w0" class="_cc dropdown-menu-right dropdown-menu">
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a>
-									</div>
+                                    <!-- <button class="btn btn-flag pr-0 dropdown-toggle" type="button" data-toggle="dropdown"><span id="flag" class="flag-icon flag-icon-ru"></span></button>	 -->
+								    <button class="btn btn-flag pr-0" type="button"><span id="flag" class="flag-icon flag-icon-ru"></span></button>
+                                
+									<!-- <div id="w0" class="_cc dropdown-menu-right dropdown-menu"> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a> -->
+										<!-- <div class="dropdown-divider"></div> -->
+										<!-- <a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a> -->
+									<!-- </div> -->
 								</div>
 							</div>
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group label-floating is_empty field-contactform-city">
 						<label class="control-label" for="contactform-city">Город</label>
-						<input type="text" id="contactform-city" class="form-control" name="ContactForm[city]" tabindex="4">
+						<input type="text" id="contactform-city" class="form-control" name="city" tabindex="4">
 							<div class="help-block"></div>
 						</div>
 						<input type="hidden" id="contactform-cc" name="ContactForm[cc]" value="ru">
@@ -855,6 +943,8 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		document.getElementById( 'modal-id' ).style.display = 'block';
 		document.getElementById( 'modal-id' ).classList.add( 'show' );
 		
+        document.getElementById('form-timestamp-feedback').value = Date.now();
+
 		// Маска для телефона
 		var offset = 0 - (new Date().getTimezoneOffset()/60) - 7;
 		$('input[name="ContactForm[tz]"]').first().val((offset <= 0 ?'':'+') + offset);
@@ -900,20 +990,72 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 <script>
 	// Отправляем данные
 	function ajaxFeedback() {
-		//let name = 'g-recaptcha-response';
-		//let recaptcha = document.getElementById( 'g-recaptcha-response-feedback' ).value;
-		let name = document.getElementById( 'contactform-name' ).value;
-		let email = document.getElementById( 'contactform-email' ).value;
-		let tel = document.getElementById( 'contactform-phone' ).value;
-		let city = document.getElementById( 'contactform-city' ).value;
+        let user_name = document.getElementById('contactform-name').value;
+        let email = document.getElementById('contactform-email').value;
+        let tel = document.getElementById('contactform-phone').value;
+        let city = document.getElementById('contactform-city').value;
+        let honeypot = document.querySelector('#grid__form-create-feedback input[name="name"]').value;
+        let timestamp = document.getElementById('form-timestamp-feedback').value;
+        
+        let form = document.getElementById('grid__form-create-feedback');
+        
+        document.querySelectorAll('.field-error').forEach(el => el.remove());
+        document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+    
 		$.ajax({
 			type: "POST",
-			url: 'include_ajaxFeedback_form.php',
-			data: { name: name, email: email, tel: tel, city: city },
-			success: function( data ) {
-				document.getElementById( 'feedbackContentId' ).innerHTML = data;
-			}
-		});
+			url: 'include_mail.php',
+            data: { user_name: user_name, email: email, tel: tel, city: city, name: honeypot, form_timestamp: timestamp },
+            dataType: 'json',
+
+            success: function(response) {
+                if (response.success) {
+                    document.getElementById('feedbackContentId').innerHTML = 
+                        '<h3 class="text-center text-success">Спасибо!</h3>' +
+                        '<p class="text-center">' + response.message + '</p>';
+                    setTimeout(modalClose, 3000);
+                } else if (response.field_errors) {
+                    for (let field in response.field_errors) {
+                        let errors = response.field_errors[field].join('<br>');
+                        
+                        if (field === 'user_name') {
+                            let fieldGroup = document.getElementById('contactform-name').closest('.form-group');
+                            fieldGroup.classList.add('has-error');
+                            fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                        } else if (field === 'email') {
+                            let fieldGroup = document.getElementById('contactform-email').closest('.form-group');
+                            fieldGroup.classList.add('has-error');
+                            fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                        } else if (field === 'tel') {
+                            let fieldGroup = document.getElementById('contactform-phone').closest('.form-group');
+                            fieldGroup.classList.add('has-error');
+                            fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                        } else if (field === 'city') {
+                            let fieldGroup = document.getElementById('contactform-city').closest('.form-group');
+                            fieldGroup.classList.add('has-error');
+                            fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                        } else {
+                            form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + errors + '</div>');
+                        }
+                    }
+                } else if (response.message) {
+                    form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function() {
+                form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">Ошибка соединения</div>');
+            },
+            complete: function() {
+                setTimeout(function() {
+                    document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                    document.querySelectorAll('.btn__spinner').forEach(function(s) {
+                        s.className = 'btn__icon';
+                        let use = s.querySelector('use');
+                        if (use) use.setAttribute('xlink:href', '#ico__arrow-1-w');
+                    });
+                }, 2000);
+            }
+        });
 	}
 	
 	// Закрываем модальное окно
@@ -938,27 +1080,31 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 				<h3 class="mb-2 text-uppercase text-wood">Есть вопросы?</h3>
 				<h4 class="mb-5 text-uppercase">Перезвоним в ближайшее время!</h4>
 				<form id="grid__form-create" class="_callnow callbackwidget-call-form track-goal-form" action="" method="post" onsubmit="ajaxCallback(); return false;">
-					<div class="model-fields mb-5">
+                    <input type="text" id="name_callback" name="name" style="position:absolute;left:-9999px;width:1px;height:1px;" tabindex="-1" autocomplete="new-password">
+                    <input type="hidden" name="form_timestamp" id="form-timestamp-callback">
+
+                    <div class="model-fields mb-5">
 						<div class="form-group label-floating field-contactform-phone required is_empty">
 							<label class="control-label" for="contactform-phone-2">Номер телефона</label>
 							<div class="input-group">
 								<input type="text" id="contactform-phone-2" class="form-control _phonemask" name="ContactForm[phone]" tabindex="3" data-mask="\+\7 (999) 999-99-99" aria-required="true" required>
-								<div class="input-group-prepend">
-									<button class="btn btn-flag pr-0 dropdown-toggle" type="button" data-toggle="dropdown"><span id="flag" class="flag-icon flag-icon-ru" title="Россия"></span></button>
-									<div id="w0" class="_cc dropdown-menu-right dropdown-menu">
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a>
-										<a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a>
-										<a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a>
-									</div>
+                                    <div class="input-group-prepend">
+									<!-- <button class="btn btn-flag pr-0 dropdown-toggle" type="button" data-toggle="dropdown"><span id="flag" class="flag-icon flag-icon-ru" title="Россия"></span></button> -->
+                                    <button class="btn btn-flag pr-0" type="button"><span id="flag" class="flag-icon flag-icon-ru"></span></button>
+									<!-- <div id="w0" class="_cc dropdown-menu-right dropdown-menu"> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\4 99-999-99-99" data-cc="az"><span class="flag-icon flag-icon-az"></span> Азербайджан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\4 99-999-99-99" data-cc="ar"><span class="flag-icon flag-icon-ar"></span> Армения</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\7\5 99-999-99-99" data-cc="by"><span class="flag-icon flag-icon-by"></span> Белоруссия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="kz"><span class="flag-icon flag-icon-kz"></span> Казахстан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\6 99-999-99-99" data-cc="kg"><span class="flag-icon flag-icon-kg"></span> Киргизия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\7 (999) 999-99-99" data-cc="ru"><span class="flag-icon flag-icon-ru"></span> Россия</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\2 99-999-99-99" data-cc="tj"><span class="flag-icon flag-icon-tj"></span> Таджикистан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\3 99-999-99-99" data-cc="tm"><span class="flag-icon flag-icon-tm"></span> Туркмения</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\9\9\8 99-999-99-99" data-cc="uz"><span class="flag-icon flag-icon-uz"></span> Узбекистан</a> -->
+										<!-- <a class="dropdown-item" href="#" data-mask="\+\3\8\0 99-999-99-99" data-cc="ua"><span class="flag-icon flag-icon-ua"></span> Украина</a> -->
+										<!-- <div class="dropdown-divider"></div> -->
+										<!-- <a class="dropdown-item" href="#" data-cc="xx" data-mask="\+9999999999[99]"><span class="flag-icon flag-icon-xx"></span> Произвольный номер</a> -->
+									<!-- </div> -->
 								</div>
 							</div>
 							<div class="help-block"></div>
@@ -983,7 +1129,9 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		document.getElementById( 'modalCallback' ).classList.add( 'show' );
 		document.getElementById( 'modalCallbackBackdrop' ).style.position = 'fixed';
 		document.getElementById( 'modalCallbackBackdrop' ).classList.add( 'show' );
-		
+
+        document.getElementById('form-timestamp-callback').value = Date.now();
+
 	
 		var offset = 0 - (new Date().getTimezoneOffset()/60) - 7;
 		$('input[name="ContactForm[tz]"]').first().val((offset <= 0 ?'':'+') + offset);
@@ -1026,20 +1174,67 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		});
 		
 	}
-	
-	// Отправляем данные
-	function ajaxCallback() {
-		let tel = document.getElementById( 'contactform-phone-2' ).value;
-		//let city = document.getElementById( 'contactform-city' ).value;
-		$.ajax({
-			type: "POST",
-			url: 'include_ajaxCallback_form.php',
-			data: { tel: tel },
-			success: function( data ) {
-				document.getElementById( 'callbackContent' ).innerHTML = data;
-			}
-		});
-	}
+
+    function ajaxCallback() {
+        let tel = document.getElementById('contactform-phone-2').value;
+        let honeypot = document.querySelector('input[name="name"]').value;
+        let timestamp = document.getElementById('form-timestamp-callback').value;
+        
+        let form = document.getElementById('grid__form-create');
+        
+        // ОЧИЩАЕМ старые ошибки
+        document.querySelectorAll('.field-error').forEach(el => el.remove());
+        document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+        
+        $.ajax({
+            type: "POST",
+            url: 'include_mail_callback.php',
+            data: { tel: tel, name: honeypot, form_timestamp: timestamp },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Успех
+                    document.getElementById('callbackContent').innerHTML = 
+                        '<h3 class="text-center text-success">Спасибо!</h3>' +
+                        '<p class="text-center">' + response.message + '</p>';
+                    setTimeout(modalClose2, 3000);
+                    
+                } else if (response.field_errors) {
+                    // Показываем ошибки
+                    for (let field in response.field_errors) {
+                        let errors = response.field_errors[field].join('<br>');
+                        
+                        if (field === 'tel') {
+                            let fieldGroup = document.getElementById('contactform-phone-2').closest('.form-group');
+                            fieldGroup.classList.add('has-error');
+                            fieldGroup.querySelector('.help-block').innerHTML = '<div class="field-error text-danger small">' + errors + '</div>';
+                        } else {
+                            form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + errors + '</div>');
+                        }
+                    }
+                } else if (response.message) {
+                    // Общая ошибка
+                    form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function() {
+                form.insertAdjacentHTML('afterbegin', '<div class="field-error alert alert-danger">Ошибка соединения</div>');
+            },
+            complete: function() {
+                // Через 2 секунды возвращаем кнопки
+                setTimeout(function() {
+                    document.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                    document.querySelectorAll('.btn__spinner').forEach(function(s) {
+                        s.className = 'btn__icon';
+                        let use = s.querySelector('use');
+                        if (use) use.setAttribute('xlink:href', '#ico__arrow-1-w');
+                    });
+                }, 2000);
+            }
+        });
+    }
+
+
 	
 	// Закрываем модальное окно
 	function modalClose2() {
@@ -1049,3 +1244,12 @@ $this->title = 'Himmel — дизайнерские потолочные, сте
 		document.getElementById( 'modalCallbackBackdrop' ).classList.remove( 'show' );
 	}
 </script>
+
+<style>
+    .field-error.text-danger.small {
+        margin-top: 3px;
+        color:#fff !important;
+    }
+</style>
+
+<!-- <script src="/himmelrf-js/form-protection.js"></script> -->
