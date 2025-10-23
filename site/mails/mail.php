@@ -1,0 +1,110 @@
+<?php
+session_start();
+require_once __DIR__ . '/validator.php';
+
+$config = [
+    'recipient_email' => 'info@himmelrf.ru, vasilyev-r@mail.ru',
+    // 'recipient_email' => 'sidorov-vv3@mail.ru, vasilyev-r@mail.ru',
+
+    'email_subject' => 'Заявка на обратный звонок',
+    'log_file' => __DIR__ . '/spam_log.txt',
+
+    'required_fields' => [
+        'user_name',
+        'email',
+        'tel'
+        // city - не обязательно
+    ],
+
+    'validation' => [
+        'require_all_fields' => true,
+        'name_only_cyrillic' => true,
+        'email_only_latin' => true,
+        'phone_same_digits' => true,
+        'phone_sequential_digits' => true,
+        'city_only_cyrillic' => true,
+        'phone_russian_operators' => true,
+        'honeypot_name' => true,
+        'phone_full_length' => true,
+        'form_timestamp' => true
+    ]
+];
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    die('Method not allowed');
+}
+
+$formData = [
+    'user_name' => $_POST['user_name'] ?? '',
+    'tel' => $_POST['tel'] ?? '',
+    'email' => $_POST['email'] ?? '',
+    'city' => $_POST['city'] ?? '',
+    'name' => $_POST['name'] ?? '',
+    'form_timestamp' => $_POST['form_timestamp'] ?? ''
+];
+
+$logger = new SpamLogger($config['log_file']);
+$validation = validateFormData($formData, $config, $russian_operator_codes, $config['required_fields']);
+
+header('Content-Type: application/json; charset=utf-8');
+
+if (!$validation['valid']) {
+    $logger->logAttempt($formData, true, $validation['errors']);
+
+    echo json_encode([
+        'success' => false,
+        'field_errors' => $validation['field_errors']
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+// Отправка письма
+$message = "Заявка\n\n";
+$message .= "Имя: " . htmlspecialchars($formData['user_name']) . "\n";
+$message .= "Телефон: " . htmlspecialchars($formData['tel']) . "\n";
+$message .= "Email: " . htmlspecialchars($formData['email']) . "\n";
+
+if (!empty($formData['city'])) {
+    $message .= "Город: " . htmlspecialchars($formData['city']) . "\n";
+}
+
+$message .= "\n---\n";
+$message .= "IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n";
+$message .= "Дата: " . date('d.m.Y H:i:s') . "\n";
+
+$headers = "From: noreply@" . $_SERVER['HTTP_HOST'] . "\r\n";
+$headers .= "Reply-To: " . htmlspecialchars($formData['email']) . "\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+$sent = mail($config['recipient_email'], $config['email_subject'], $message, $headers);
+
+//AMOCRM
+$data = $_POST;
+$data = array_merge($data, $_COOKIE);
+$data['subdomain'] = 'himmel';
+$data['script'] = 'himmel_site';
+$data['title'] = 'Обратная связь';
+$data['ref'] = $_SERVER['HTTP_REFERER'];
+$ch = curl_init('https://s5-nova.ru/app/order/hook.php');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_exec($ch);
+curl_close($ch);
+//AMOCRM
+
+if ($sent) {
+    $logger->logAttempt($formData, false, []);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.'
+    ], JSON_UNESCAPED_UNICODE);
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Не удалось отправить письмо. Попробуйте позже.'
+    ], JSON_UNESCAPED_UNICODE);
+}
